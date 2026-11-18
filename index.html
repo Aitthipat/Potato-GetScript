@@ -19,6 +19,7 @@ h1{font-family:'Bowlby One','Impact',sans-serif;font-weight:400;font-size:clamp(
 .btn:disabled{background:#333;color:#888;cursor:not-allowed}
 .btn:focus-visible,.copy:focus-visible{outline:3px solid #888;outline-offset:3px}
 h2{font-size:22px;margin:32px 0 16px}
+.script+.script{margin-top:16px}
 .script{background:rgba(17,17,17,.92);border:2px solid var(--line);border-radius:16px;padding:16px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
 .name{font-weight:600}
@@ -65,7 +66,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
 
   <main>
     <h2>สคริปทั้งหมด</h2>
-    <section class="script">
+    <section class="script" data-video="https://youtu.be/oxzmzAx98P8">
       <div class="top">
         <span class="name">สคริปใช้ได้ทุกแมพ</span>
         <div class="status">
@@ -73,10 +74,25 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
           <span class="badge">อัพเดทล่าสุด 18/11/69</span>
         </div>
       </div>
-      <pre id="code">loadstring(game:HttpGet("https://gist.githubusercontent.com/ScriptHub927/ff8f6349228c8aecbf99a24dfb560ffc/raw/script.lua"))()</pre>
+      <pre class="code">loadstring(game:HttpGet("https://gist.githubusercontent.com/ScriptHub927/ff8f6349228c8aecbf99a24dfb560ffc/raw/script.lua"))()</pre>
       <div class="actions">
-        <button class="copy" id="copyBtn">คัดลอกสคริป</button>
-        <button class="copy alt" id="videoBtn">▶ วิดีโอการเล่น</button>
+        <button class="copy copyBtn">คัดลอกสคริป</button>
+        <button class="copy alt videoBtn">▶ วิดีโอการเล่น</button>
+      </div>
+    </section>
+
+    <section class="script" data-video="https://youtu.be/zHKOPCcmKms">
+      <div class="top">
+        <span class="name">สคริปแก้ไขระบบ (ใช้ได้บางแมพ)</span>
+        <div class="status">
+          <span class="badge">🔓 ไม่มีคีย์</span>
+          <span class="badge">อัพเดทล่าสุด 18/11/69</span>
+        </div>
+      </div>
+      <pre class="code">loadstring(game:HttpGet("https://gist.githubusercontent.com/ScriptHub927/0606b97c757ab7fc1e8a2da46ef214cc/raw/script.lua"))()</pre>
+      <div class="actions">
+        <button class="copy copyBtn">คัดลอกสคริป</button>
+        <button class="copy alt videoBtn">▶ วิดีโอการเล่น</button>
       </div>
     </section>
   </main>
@@ -85,30 +101,31 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
 </div>
 
 <script>
-const SCRIPT_CODE = document.getElementById("code").textContent.trim();
+document.querySelectorAll(".script").forEach(sec => {
+  const code = sec.querySelector(".code").textContent.trim();
+  const videoUrl = sec.dataset.video;
+  const copyBtn = sec.querySelector(".copyBtn");
+  let timer;
 
-/* ลิงก์วิดีโอการเล่น: เปลี่ยนเป็นลิงก์วิดีโอของคุณ */
-const VIDEO_URL = "https://youtu.be/oxzmzAx98P8";
-document.getElementById("videoBtn").addEventListener("click", () => {
-  window.open(VIDEO_URL, "_blank");
-});
+  sec.querySelector(".videoBtn").addEventListener("click", () => {
+    window.open(videoUrl, "_blank");
+  });
 
-const btn = document.getElementById("copyBtn");
-let timer;
-btn.addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(SCRIPT_CODE);
-  } catch (e) {
-    const t = document.createElement("textarea");
-    t.value = SCRIPT_CODE;
-    document.body.appendChild(t);
-    t.select();
-    document.execCommand("copy");
-    t.remove();
-  }
-  btn.textContent = "✓";
-  clearTimeout(timer);
-  timer = setTimeout(() => { btn.textContent = "คัดลอกสคริป"; }, 3000);
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch (e) {
+      const t = document.createElement("textarea");
+      t.value = code;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand("copy");
+      t.remove();
+    }
+    copyBtn.textContent = "✓";
+    clearTimeout(timer);
+    timer = setTimeout(() => { copyBtn.textContent = "คัดลอกสคริป"; }, 3000);
+  });
 });
 </script>
 </body>
