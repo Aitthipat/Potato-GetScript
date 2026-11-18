@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POTATO HUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Noto+Sans+Thai:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--card:#111;--line:#fff;--text:#fff;--muted:#a0a0a0}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans Thai',system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 16px 48px}
+header{padding:56px 0 32px;text-align:center}
+h1{font-family:'Bowlby One','Impact',sans-serif;font-weight:400;font-size:clamp(44px,13vw,88px);line-height:1;letter-spacing:1px;text-shadow:4px 4px 0 #444}
+.tag{margin:16px auto 24px;color:var(--muted);max-width:44ch}
+.btn{display:inline-block;background:#fff;color:#000;text-decoration:none;padding:12px 26px;border-radius:999px;font:600 16px 'Noto Sans Thai',sans-serif;border:0;cursor:pointer}
+.btn:hover{background:#ddd}
+.btn:disabled{background:#333;color:#888;cursor:not-allowed}
+.btn:focus-visible,.copy:focus-visible{outline:3px solid #888;outline-offset:3px}
+h2{font-size:22px;margin:32px 0 16px}
+.script{background:rgba(17,17,17,.92);border:2px solid var(--line);border-radius:16px;padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.name{font-weight:600}
+pre{background:#000;border:1px solid #333;color:#e6e6e6;padding:12px;border-radius:8px;overflow-x:auto;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre}
+.copy{background:#fff;color:#000;border:0;border-radius:999px;min-width:84px;padding:8px 18px;font:600 14px 'Noto Sans Thai',sans-serif;cursor:pointer;flex-shrink:0}
+.copy:active{transform:scale(.95)}
+.status{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:flex-end;gap:6px}
+.script .top{align-items:flex-start;flex-wrap:wrap}
+.badge{border:1px solid #fff;border-radius:999px;padding:2px 10px;font-size:12px;white-space:nowrap}
+.actions{display:flex;gap:10px;margin-top:12px}
+.actions .copy{flex:1;padding:12px 10px}
+.copy.alt{background:#000;color:#fff;border:2px solid #fff}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
+
+/* มันฝรั่งลอย */
+.potatoes{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.potato{position:absolute;left:var(--x);top:var(--y);font-size:var(--s);filter:grayscale(1);opacity:.55;animation:float var(--d) ease-in-out infinite alternate;animation-delay:var(--delay)}
+@keyframes float{
+  0%{transform:translate(0,0) rotate(-12deg)}
+  50%{transform:translate(40px,-60px) rotate(10deg)}
+  100%{transform:translate(-30px,50px) rotate(-6deg)}
+}
+
+@media (prefers-reduced-motion:reduce){.potato{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="potatoes" aria-hidden="true">
+  <span class="potato" style="--x:6%;--y:10%;--s:54px;--d:14s;--delay:0s">🥔</span>
+  <span class="potato" style="--x:78%;--y:6%;--s:70px;--d:18s;--delay:-4s">🥔</span>
+  <span class="potato" style="--x:40%;--y:32%;--s:44px;--d:16s;--delay:-8s">🥔</span>
+  <span class="potato" style="--x:12%;--y:58%;--s:76px;--d:20s;--delay:-2s">🥔</span>
+  <span class="potato" style="--x:70%;--y:52%;--s:50px;--d:15s;--delay:-10s">🥔</span>
+  <span class="potato" style="--x:44%;--y:80%;--s:62px;--d:19s;--delay:-6s">🥔</span>
+</div>
+
+<div class="wrap" id="site">
+  <header>
+    <h1>POTATO HUB</h1>
+    <p class="tag">กดคัดลอกแล้วเอาไปวางในตัวรันสคริปต์ได้เลย</p>
+    <a class="btn" href="https://discord.gg/a6UW6cSD8x" target="_blank" rel="noopener">เข้าดิสคอร์ด</a>
+  </header>
+
+  <main>
+    <h2>สคริปทั้งหมด</h2>
+    <section class="script">
+      <div class="top">
+        <span class="name">สคริปใช้ได้ทุกแมพ</span>
+        <div class="status">
+          <span class="badge">🔓 ไม่มีคีย์</span>
+          <span class="badge">อัพเดทล่าสุด 18/11/69</span>
+        </div>
+      </div>
+      <pre id="code">loadstring(game:HttpGet("https://gist.githubusercontent.com/ScriptHub927/ff8f6349228c8aecbf99a24dfb560ffc/raw/script.lua"))()</pre>
+      <div class="actions">
+        <button class="copy" id="copyBtn">คัดลอกสคริป</button>
+        <button class="copy alt" id="videoBtn">▶ วิดีโอการเล่น</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>© POTATO HUB</footer>
+</div>
+
+<script>
+const SCRIPT_CODE = document.getElementById("code").textContent.trim();
+
+/* ลิงก์วิดีโอการเล่น: เปลี่ยนเป็นลิงก์วิดีโอของคุณ */
+const VIDEO_URL = "https://www.youtube.com/@HydroCore2";
+document.getElementById("videoBtn").addEventListener("click", () => {
+  window.open(VIDEO_URL, "_blank");
+});
+
+const btn = document.getElementById("copyBtn");
+let timer;
+btn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(SCRIPT_CODE);
+  } catch (e) {
+    const t = document.createElement("textarea");
+    t.value = SCRIPT_CODE;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand("copy");
+    t.remove();
+  }
+  btn.textContent = "✓";
+  clearTimeout(timer);
+  timer = setTimeout(() => { btn.textContent = "คัดลอกสคริป"; }, 3000);
+});
+</script>
+</body>
+</html>
